@@ -1,5 +1,6 @@
 import streamlit as st
 from Adafruit_IO import Client, RequestError
+import time
 
 # --- CẤU HÌNH ADAFRUIT IO ---
 # Thay vì ghi trực tiếp chữ, ta dùng hàm st.secrets để giấu đi
@@ -26,3 +27,9 @@ except RequestError as e:
     st.info("Hãy kiểm tra lại tên Username, Key và Tên Feed nhé.")
 
 st.caption("Dữ liệu được cập nhật trực tiếp từ Adafruit IO.")
+
+# --- CƠ CHẾ TỰ ĐỘNG CẬP NHẬT ---
+# Dừng chương trình 5 giây
+time.sleep(5)
+# Yêu cầu Streamlit tải lại trang (tương đương với việc máy tự bấm F5 ẩn)
+st.rerun()
