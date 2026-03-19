@@ -3,7 +3,7 @@ from Adafruit_IO import Client, RequestError
 
 # --- CẤU HÌNH ADAFRUIT IO ---
 ADAFRUIT_AIO_USERNAME = "tiendinh2110"
-ADAFRUIT_AIO_KEY      = "aio_iJBD804WBpYxfWkhLaHuJvbMHB60"
+ADAFRUIT_AIO_KEY      = "aio_MhCD64uhsTRUIxVBJZXQD3BCH06F"
 
 # Khởi tạo kết nối
 aio = Client(ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY)
