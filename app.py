@@ -2,8 +2,9 @@ import streamlit as st
 from Adafruit_IO import Client, RequestError
 
 # --- CẤU HÌNH ADAFRUIT IO ---
-ADAFRUIT_AIO_USERNAME = "tiendinh2110"
-ADAFRUIT_AIO_KEY      = "aio_MhCD64uhsTRUIxVBJZXQD3BCH06F"
+# Thay vì ghi trực tiếp chữ, ta dùng hàm st.secrets để giấu đi
+ADAFRUIT_AIO_USERNAME = st.secrets["AIO_USERNAME"]
+ADAFRUIT_AIO_KEY      = st.secrets["AIO_KEY"]
 
 # Khởi tạo kết nối
 aio = Client(ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY)
