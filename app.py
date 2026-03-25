@@ -60,7 +60,7 @@ st.divider() # Add another dividing line
 st.caption(f"Status: Live Update Every 10s. Last contact: {time.strftime('%H:%M:%S')}")
 
 # --- AUTO UPDATE MECHANISM (Receive Side Only) ---
-# Pause for 10 seconds (Increase slightly to allow sending time)
-time.sleep(10)
+# Pause for 2 seconds (Increase slightly to allow sending time)
+time.sleep(2)
 # Rerun the script to fetch new temperature data
 st.rerun()
