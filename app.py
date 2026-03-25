@@ -2,34 +2,33 @@ import streamlit as st
 from Adafruit_IO import Client, RequestError
 import time
 
-# --- CẤU HÌNH ADAFRUIT IO ---
-# Thay vì ghi trực tiếp chữ, ta dùng hàm st.secrets để giấu đi
+# --- ADAFRUIT IO CONFIGURATION ---
 ADAFRUIT_AIO_USERNAME = st.secrets["AIO_USERNAME"]
 ADAFRUIT_AIO_KEY      = st.secrets["AIO_KEY"]
 
-# Khởi tạo kết nối
+# Initialize connection
 aio = Client(ADAFRUIT_AIO_USERNAME, ADAFRUIT_AIO_KEY)
 
-# --- XÂY DỰNG GIAO DIỆN WEB ---
+# --- WEB UI DESIGN ---
 st.set_page_config(page_title="YoloHome Dashboard", layout="centered")
-st.title("🏡 Hệ thống YoloHome")
-st.subheader("Giám sát Môi trường Không khí")
+st.title("🏡 YoloHome System")
+st.subheader("Environment Monitoring")
 
 try:
-    # Kéo dữ liệu mới nhất từ Feed có tên là 'bbc-temp'
+    # Fetch the latest data from the 'bbc-temp' feed
     data_nhiet_do = aio.receive('bbc-temp')
     
-    # Hiển thị thẳng số liệu ra màn hình (Không cần col1 nữa)
-    st.metric(label="Nhiệt độ hiện tại", value=f"{data_nhiet_do.value} °C")
+    # Display the metric directly
+    st.metric(label="Current Temperature", value=f"{data_nhiet_do.value} °C")
 
 except RequestError as e:
-    st.error(f"Lỗi kết nối hoặc không tìm thấy Feed: {e}")
-    st.info("Hãy kiểm tra lại tên Username, Key và Tên Feed nhé.")
+    st.error(f"Connection error or Feed not found: {e}")
+    st.info("Please double-check your Username, Key, and Feed Name.")
 
-st.caption("Dữ liệu được cập nhật trực tiếp từ Adafruit IO.")
+st.caption(f"Data is updated in real-time from Adafruit IO. Last update: {time.strftime('%H:%M:%S')}")
 
-# --- CƠ CHẾ TỰ ĐỘNG CẬP NHẬT ---
-# Dừng chương trình 5 giây
+# --- AUTO UPDATE MECHANISM ---
+# Pause for 5 seconds
 time.sleep(5)
-# Yêu cầu Streamlit tải lại trang (tương đương với việc máy tự bấm F5 ẩn)
+# Rerun the script to fetch new data
 st.rerun()
