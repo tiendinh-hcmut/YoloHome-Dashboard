@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-multipart
+ultralytics
+pillow
+opencv-python
+pymongo
+PyJWT
+pwdlib[argon2]
+email-validator
+python-dotenv
+requests
