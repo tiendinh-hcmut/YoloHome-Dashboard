@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from .api.alerts import router as alerts_router
 from .api.auth import router as auth_router
 from .api.devices import router as devices_router
 from .api.model import router as model_router
@@ -37,3 +38,4 @@ app.include_router(auth_router)
 app.include_router(model_router)
 app.include_router(sensors_router)
 app.include_router(devices_router)
+app.include_router(alerts_router)

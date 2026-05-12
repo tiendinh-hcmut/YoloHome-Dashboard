@@ -66,7 +66,7 @@ function SwitchMetric({ label, active, onToggle, loading }) {
     <div className="iot-metric-card">
       <h2 className="iot-switch-title">{label}</h2>
       <div className={`iot-switch-text ${active ? "on" : "off"}`}>
-        {active ? "ON" : "OFF"}
+        {loading ? "..." : active ? "ON" : "OFF"}
       </div>
 
       <button
@@ -80,7 +80,12 @@ function SwitchMetric({ label, active, onToggle, loading }) {
   );
 }
 
-export default function IotVisualBoard({ latest, deviceState, onToggleLed, controlling })  {
+export default function IotVisualBoard({
+  latest,
+  deviceState,
+  onToggleLed,
+  controlling,
+}) {
   const score = getScore(latest);
   const status = getStatus(score);
   const brightnessPercent = clamp(toPercent(latest?.light ?? 0, 0, 1023), 0, 100);
@@ -93,35 +98,54 @@ export default function IotVisualBoard({ latest, deviceState, onToggleLed, contr
           <div className="iot-score-box">{score}%</div>
 
           <p className="iot-score-status">
-            Overall Score: <span className={`status-${status.toLowerCase()}`}>{status}</span>
+            Overall Score:{" "}
+            <span className={`status-${status.toLowerCase()}`}>{status}</span>
           </p>
 
           <div className="iot-ideal-range">
             <h3>Ideal levels for these 3 parameters:</h3>
-            <p>Temperature: <strong>21 - 32°C</strong></p>
-            <p>Humidity: <strong>40 - 80%</strong></p>
-            <p>Brightness: <strong>60 - 100%</strong></p>
+            <p>
+              Temperature: <strong>21 - 32°C</strong>
+            </p>
+            <p>
+              Humidity: <strong>40 - 80%</strong>
+            </p>
+            <p>
+              Brightness: <strong>60 - 100%</strong>
+            </p>
           </div>
         </section>
 
         <section className="card iot-device-card">
           <h2>Thiết bị hiện tại</h2>
-          <p><strong>Device ID:</strong> {latest?.device_id || "--"}</p>
-          <p><strong>Timestamp:</strong> {latest?.timestamp || "--"}</p>
-          <p><strong>Gas:</strong> {latest?.gas ?? "--"}</p>
-          <p><strong>Flame:</strong> {latest?.flame ?? "--"}</p>
+          <p>
+            <strong>Device ID:</strong>{" "}
+            {latest?.device_id || latest?.metadata?.device_id || "--"}
+          </p>
+          <p>
+            <strong>Timestamp:</strong> {latest?.timestamp || "--"}
+          </p>
         </section>
       </div>
 
       <div className="iot-visual-bottom">
         <ThermometerMetric value={latest?.temperature} />
-        <CircularMetric label="Humidity" value={humidityPercent} colorClass="green" />
-        <CircularMetric label="Brightness" value={brightnessPercent} colorClass="lime" />
+        <CircularMetric
+          label="Humidity"
+          value={humidityPercent}
+          colorClass="green"
+        />
+        <CircularMetric
+          label="Brightness"
+          value={brightnessPercent}
+          colorClass="lime"
+        />
         <SwitchMetric
-  label="LED"
-  active={Boolean(deviceState?.led)}
-  onToggle={onToggleLed}
-  loading={controlling}/>
+          label="LED"
+          active={Boolean(deviceState?.led)}
+          onToggle={onToggleLed}
+          loading={controlling}
+        />
       </div>
     </div>
   );

@@ -37,6 +37,19 @@ class Settings:
             "bbc-brightness",
         )
 
+        self.adafruit_io_danger_feed_key = os.getenv(
+            "ADAFRUIT_IO_DANGER_FEED_KEY",
+            "danger-detected",
+        )
+        self.adafruit_io_pump_command_feed_key = os.getenv(
+            "ADAFRUIT_IO_PUMP_COMMAND_FEED_KEY",
+            "pump-command",
+        )
+        self.adafruit_io_pump_status_feed_key = os.getenv(
+            "ADAFRUIT_IO_PUMP_STATUS_FEED_KEY",
+            "pump-status",
+        )
+
 
 settings = Settings()
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

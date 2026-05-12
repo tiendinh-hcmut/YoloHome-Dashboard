@@ -64,7 +64,6 @@ export default function IotDashboard() {
     const previousState = deviceState?.led ?? false;
     const nextValue = !previousState;
 
-    // đổi UI ngay
     setDeviceState((prev) => ({
       ...(prev || { device_id: deviceId }),
       led: nextValue,
@@ -72,23 +71,17 @@ export default function IotDashboard() {
 
     try {
       setControlling(true);
-
       const res = await controlDevice(deviceId, { led: nextValue });
-
-      // đồng bộ lại theo backend
       setDeviceState((prev) => ({
         ...(prev || {}),
         ...res,
       }));
     } catch (err) {
       console.error(err);
-
-      // rollback nếu lỗi
       setDeviceState((prev) => ({
         ...(prev || { device_id: deviceId }),
         led: previousState,
       }));
-
       alert("Không điều khiển được LED.");
     } finally {
       setControlling(false);
@@ -99,14 +92,16 @@ export default function IotDashboard() {
     <>
       <Topbar
         title="IoT Dashboard"
-        subtitle="Hiển thị dữ liệu sensor được lưu trong MongoDB."
+        subtitle="Hiển thị dữ liệu từ Adafruit đã đồng bộ về MongoDB."
       />
 
       {error ? <div className="global-error">{error}</div> : null}
 
       <section className="card">
         <div className="card-header">
-          <h2><span className="title-icon">🔎</span>Bộ lọc thiết bị</h2>
+          <h2>
+            <span className="title-icon">🔎</span>Bộ lọc thiết bị
+          </h2>
           <span className="tag blue">Filter</span>
         </div>
 
@@ -142,7 +137,6 @@ export default function IotDashboard() {
           onToggleLed={handleToggleLed}
           controlling={controlling}
         />
-
         <SensorHistoryCard history={history} />
       </div>
     </>
